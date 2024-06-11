@@ -185,8 +185,8 @@ public final class Sistema extends javax.swing.JFrame {
         });
 
         CBlistaDeArbol.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        CBlistaDeArbol.setMaximumRowCount(4);
-        CBlistaDeArbol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ABB", "AVL", "AMV", "AB" }));
+        CBlistaDeArbol.setMaximumRowCount(5);
+        CBlistaDeArbol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ARBOLES", "ABB", "AVL", "AMV", "AB" }));
         CBlistaDeArbol.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CBlistaDeArbolMouseClicked(evt);
@@ -841,22 +841,37 @@ public final class Sistema extends javax.swing.JFrame {
 
     private void CBlistaDeArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBlistaDeArbolActionPerformed
         // TODO add your handling code here:
+         this.limpiarTabla();
+
+        String itemDeLista = (String) CBlistaDeArbol.getSelectedItem();
+        if (itemDeLista != "ARBOLES") {
+            switch (itemDeLista) {
+                case "ABB" ->
+                    arbol = new ArbolBinarioBusqueda();
+                case "AVL" ->
+                    arbol = new ArbolAVL();
+                case "AMV" ->
+                    arbol = new ArbolMViasBusqueda();
+            }
+            CBlistaDeArbol.setEnabled(false);
+        }
+                        
     }//GEN-LAST:event_CBlistaDeArbolActionPerformed
 
     private void CBlistaDeArbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBlistaDeArbolMouseClicked
         // TODO add your handling code here:
-        this.limpiarTabla();
-        String itemDeLista = (String) CBlistaDeArbol.getSelectedItem();
-
-        switch (itemDeLista) {
-            case "ABB" ->
-                arbol = new ArbolBinarioBusqueda();
-            case "AVL" ->
-                arbol = new ArbolAVL();
-            case "AMV" ->
-                arbol = new ArbolMViasBusqueda();
-        }
-        CBlistaDeArbol.setEnabled(false);
+//        this.limpiarTabla();
+//        String itemDeLista = (String) CBlistaDeArbol.getSelectedItem();
+//
+//        switch (itemDeLista) {
+//            case "ABB" ->
+//                arbol = new ArbolBinarioBusqueda();
+//            case "AVL" ->
+//                arbol = new ArbolAVL();
+//            case "AMV" ->
+//                arbol = new ArbolMViasBusqueda();
+//        }
+//        CBlistaDeArbol.setEnabled(false);
 
         /* switch (itemDeLista) {
             case "ABB":
@@ -888,7 +903,7 @@ public final class Sistema extends javax.swing.JFrame {
             List<ClienteArbol> clientesEncontrados = new ArrayList<>();
             for (int i = 0; i < arbol.recorridoEnInOrden().size(); i++) {
                 String nombreABuscar = arbol.recorridoEnInOrdenParaValores().get(i).getNombre();
-                if (nombreABuscar.contains(nombre)) {
+                if (nombreABuscar.toLowerCase().contains(nombre.toLowerCase())) {
                     clientesEncontrados.add(arbol.recorridoEnInOrdenParaValores().get(i));
                 }
             }
